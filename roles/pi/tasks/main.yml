@@ -10,6 +10,11 @@
     name: htop
     state: present
 
+- name: 'Creates SSH folder for pi'
+  shell: mkdir -p /home/pi/.ssh
+  args:
+    creates: /home/pi/.ssh
+
 - name: 'Generate SSH keys for pi'
   shell: ssh-keygen -b 2048 -t rsa -f /home/pi/.ssh/id_rsa -q -N ""
   args:
@@ -25,6 +30,11 @@
   command: "chown -R pi:pi /home/pi/.ssh"
   changed_when: false
 
+- name: 'Creates SSH folder for root'
+  shell: mkdir -p /root/.ssh
+  args:
+    creates: /root/.ssh
+    
 - name: 'Generate SSH keys for root'
   shell: ssh-keygen -b 2048 -t rsa -f /root/.ssh/id_rsa -q -N ""
   args:
