@@ -27,8 +27,12 @@
     key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
 
 - name: 'change owner of SSH keys to pi'  
-  command: "chown -R pi:pi /home/pi/.ssh"
-  changed_when: false
+  file:
+    path: /home/pi/.ssh
+    owner: pi
+    group: pi    
+    state: directory
+    recurse: yes
 
 - name: 'Creates SSH folder for root'
   shell: mkdir -p /root/.ssh

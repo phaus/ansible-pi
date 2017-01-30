@@ -14,10 +14,13 @@
   with_items:
     - wget https://nodejs.org/dist/v4.6.0/node-v4.6.0-linux-armv6l.tar.gz 
     - tar -xvf node-v4.6.0-linux-armv6l.tar.gz
-    - cp -R /root/node-v4.6.0-linux-armv6l/bin/ /usr/local/
-    - cp -R /root/node-v4.6.0-linux-armv6l/lib/ /usr/local/
-    - cp -R /root/node-v4.6.0-linux-armv6l/share/ /usr/local/
-    - cp -R /root/node-v4.6.0-linux-armv6l/include/ /usr/local/
+    - cp -fR /root/node-v4.6.0-linux-armv6l/bin/ /usr/local/
+    - cp -fR /root/node-v4.6.0-linux-armv6l/lib/ /usr/local/
+    - cp -fR /root/node-v4.6.0-linux-armv6l/share/ /usr/local/
+    - cp -fR /root/node-v4.6.0-linux-armv6l/include/ /usr/local/
+    - rm -R /root/node-v4.6.0-linux-armv6l.tar.gz    
+  args:
+    creates: /root/node-v4.6.0-linux-armv6l
 
 - name: 'Install homebridge'  
   command: chdir=/root/ {{ item }}
@@ -34,7 +37,15 @@
   copy: src=./homebridge/homebridge dest=/etc/init.d/homebridge mode=0755
 
 - name: '.homebridge owned by pi'
-  command: chdir=/home/pi chown -R pi:pi /home/pi/.homebridge
+  file:
+    path: /home/pi/.homebridge
+    owner: pi
+    group: pi    
+    state: directory
+    recurse: yes
 
 - name: 'Enable homebridge'  
   command: update-rc.d homebridge defaults
+
+- name: 'Start homebridge'  
+  command: /etc/init.d/homebridge restart
