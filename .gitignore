@@ -1,5 +1,5 @@
 .DS_Store
 hosts
-wpa_supplicant.conf
+wlan/wpa_supplicant.conf
 playbook.retry
 homebridge/config.json

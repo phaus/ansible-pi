@@ -9,13 +9,14 @@ There is a [complete guide to setting up your raspberry pi without a keyboard an
 Clone and setup the ansible script. 
 
 ```
-git clone https://github.com/motdotla/ansible-pi.git
+git clone https://github.com/phaus/ansible-pi.git
 cd ansible-pi
 cp hosts.example hosts
-cp wpa_supplicant.conf.example wpa_supplicant.conf
+cp homebridge/config.json.example homebridge/config.json
+cp wlan/wpa_supplicant.conf.example wlan/wpa_supplicant.conf
 ```
 
-Edit the `wpa_supplicant.conf` and `hosts` files.
+Edit `homebridge/config.json` and/or `wlan/wpa_supplicant.conf` and `hosts` files.
 
 Deploy using [ansible](http://www.ansible.com) (install instructions for ansible are in [requirements](#requirements) below).
 
