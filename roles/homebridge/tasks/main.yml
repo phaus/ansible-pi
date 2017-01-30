@@ -1,0 +1,37 @@
+---
+- name: 'set timezone to Europe/Berlin'
+  timezone:
+    name: Europe/Berlin
+
+- name: 'Install prerequisites'
+  apt: name={{item}} state=installed
+  with_items:
+    - wget
+    - libavahi-compat-libdnssd-dev
+
+- name: 'Install node.js'  
+  command: chdir=/root/ {{ item }}
+  with_items:
+    - wget https://nodejs.org/dist/v4.6.0/node-v4.6.0-linux-armv6l.tar.gz 
+    - tar -xvf node-v4.6.0-linux-armv6l.tar.gz
+    - cp -R /root/node-v4.6.0-linux-armv6l/bin/ /usr/local/
+    - cp -R /root/node-v4.6.0-linux-armv6l/lib/ /usr/local/
+    - cp -R /root/node-v4.6.0-linux-armv6l/share/ /usr/local/
+    - cp -R /root/node-v4.6.0-linux-armv6l/include/ /usr/local/
+
+- name: 'Install homebridge'  
+  command: chdir=/root/ {{ item }}
+  with_items:
+    - sudo npm install -g --unsafe-perm homebridge 
+    - sudo npm install forever -g
+    - mkdir -p ~/.homebridge
+    - sudo npm install -g homebridge-fritz
+
+- name: 'Configure homebridge'
+  copy: src=./homebridge/config.json dest=~/.homebridge/config.json mode=0600
+
+- name: 'Configure homebridge init.d'
+  copy: src=./homebridge/homebridge dest=/etc/init.d/homebridge mode=0755
+
+- name: 'Enable homebridge'  
+  command: update-rc.d homebridge defaults

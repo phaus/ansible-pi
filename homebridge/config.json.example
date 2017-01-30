@@ -1,0 +1,25 @@
+{
+    "bridge": {
+        "name": "Fritzbox",
+        "username": "AA:27:BB:64:61:81",
+        "port": 51826,
+        "pin": "123-45-678"
+    },
+
+    "accessories": [
+    ],
+
+    "platforms": [
+        {
+          "platform": "Fritz!Box",
+          "name": "My FritzBox",
+          "username": "<user>",
+          "password": "<pass>",
+          "url": "http://fritz.box",
+          "interval": 360,
+          "options": {
+            "strictSSL": false
+          }
+        }    
+    ]
+}
