@@ -24,14 +24,17 @@
   with_items:
     - sudo npm install -g --unsafe-perm homebridge 
     - sudo npm install forever -g
-    - mkdir -p ~/.homebridge
+    - mkdir -p /home/pi/.homebridge
     - sudo npm install -g homebridge-fritz
 
 - name: 'Configure homebridge'
-  copy: src=./homebridge/config.json dest=~/.homebridge/config.json mode=0600
+  copy: src=./homebridge/config.json dest=/home/pi/.homebridge/config.json mode=0600
 
 - name: 'Configure homebridge init.d'
   copy: src=./homebridge/homebridge dest=/etc/init.d/homebridge mode=0755
+
+- name: '.homebridge owned by pi'
+  command: chdir=/home/pi chown -R pi:pi /home/pi/.homebridge
 
 - name: 'Enable homebridge'  
   command: update-rc.d homebridge defaults
