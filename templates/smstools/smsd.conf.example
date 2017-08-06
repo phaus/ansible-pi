@@ -1,0 +1,22 @@
+# SMSD Config Basics
+devices = GSM1
+logfile = /var/log/smsd.log
+outgoing = /var/spool/sms/outgoing
+checked = /var/spool/sms/checked
+incoming = /var/spool/sms/incoming
+failed = /var/spool/sms/failed
+sent = /var/spool/sms/sent
+loglevel = 1
+autosplit = 3
+
+
+# Huawei E173
+[GSM1]
+init = AT^CURC=0
+device = /dev/ttyUSB0
+baudrate = 19200
+incoming = no
+report_device_details = yes
+signal_quality_ber_ignore = yes
+pin = 1234
+smsc = 491701234567

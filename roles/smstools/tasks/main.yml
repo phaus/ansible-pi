@@ -1,0 +1,48 @@
+---
+- name: 'Update APT package cache'
+  action: apt update_cache=yes
+
+- name: 'Upgrade APT to the lastest packages'
+  action: apt upgrade=safe
+
+- name: 'Install prerequisites'
+  apt: name={{item}} state=installed
+  with_items:
+    - smstools 
+    - usb-modeswitch 
+    - usb-modeswitch-data
+
+- name: 'change owner of spool directory to smsd'  
+  file:
+    path: /var/spool/sms
+    owner: smsd
+    group: dialout    
+    state: directory
+    recurse: yes   
+
+- name: 'Configure udev rule'
+  copy: src=./templates/smstools/61-option-modem-modeswitch.rules dest=/lib/udev/rules.d/61-option-modem-modeswitch.rules mode=0644
+
+- name: 'Configure smsd'
+  copy: src=./templates/smstools/smsd.conf dest=/etc/smsd.conf mode=0644
+
+- name: 'Configure smsd'
+  copy: src=./templates/smstools/default/smstools dest=/etc/default/smstools mode=0644
+
+- name: 'Check for Modem mode'
+  shell: /usr/bin/lsusb | grep modem
+  register: subs
+
+- name: 'Switch to Modem mode'
+  command: usb_modeswitch -v 12d1 -p 1436 -M '55534243123456780000000000000011062000000100000000000000000000' 
+  when: '"modem-mode" not in subs.stdout'
+
+- name: 'Restart smstools'
+  service:
+    name: smstools
+    state: restarted
+
+- name: 'Send Test SMS'
+  copy: src=./templates/smstools/test.sms dest=/var/spool/sms/outgoing/test.sms mode=0644
+
+

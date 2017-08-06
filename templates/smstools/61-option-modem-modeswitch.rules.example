@@ -1,0 +1,1 @@
+ATTRS{idVendor}=="12d1", ATTRS{idProduct}=="1003", RUN+="modem-modeswitch -v 0x%s{idVendor} -p 0x%s{idProduct} -t option-zerocd"
