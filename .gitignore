@@ -1,5 +1,8 @@
 .DS_Store
 hosts
-wlan/wpa_supplicant.conf
 playbook.retry
-homebridge/config.json
+templates/smstools/smsd.conf
+templates/smstools/test.sms
+templates/smstools/61-option-modem-modeswitch.rules
+templates/homebridge/config.json
+templates/wlan/wpa_supplicant.conf
