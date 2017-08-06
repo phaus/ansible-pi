@@ -15,3 +15,11 @@
     - homebridge
   remote_user: pi
   become: yes
+
+- name: Ansible Playbook for configuring smstools
+
+  hosts: smstools
+  roles:
+    - smstools
+  remote_user: pi
+  become: yes
