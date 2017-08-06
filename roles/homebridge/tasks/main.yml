@@ -9,18 +9,18 @@
     - wget
     - libavahi-compat-libdnssd-dev
 
-- name: 'Install node.js'  
+- name: 'Install node.js'
   command: chdir=/root/ {{ item }}
   with_items:
-    - wget https://nodejs.org/dist/v4.6.0/node-v4.6.0-linux-armv6l.tar.gz 
-    - tar -xvf node-v4.6.0-linux-armv6l.tar.gz
-    - cp -fR /root/node-v4.6.0-linux-armv6l/bin/ /usr/local/
-    - cp -fR /root/node-v4.6.0-linux-armv6l/lib/ /usr/local/
-    - cp -fR /root/node-v4.6.0-linux-armv6l/share/ /usr/local/
-    - cp -fR /root/node-v4.6.0-linux-armv6l/include/ /usr/local/
-    - rm -R /root/node-v4.6.0-linux-armv6l.tar.gz    
+    - wget https://nodejs.org/dist/v4.6.0/node-v4.6.0-linux-armv7l.tar.gz 
+    - tar -xvf node-v4.6.0-linux-armv7l.tar.gz 
+    - cp -fR /root/node-v4.6.0-linux-armv7l/bin/ /usr/local/
+    - cp -fR /root/node-v4.6.0-linux-armv7l/lib/ /usr/local/
+    - cp -fR /root/node-v4.6.0-linux-armv7l/share/ /usr/local/
+    - cp -fR /root/node-v4.6.0-linux-armv7l/include/ /usr/local/
+    - rm -R /root/node-v4.6.0-linux-armv7l.tar.gz      
   args:
-    creates: /root/node-v4.6.0-linux-armv6l
+    creates: /root/node-v4.6.0-linux-armv7l
 
 - name: 'Install homebridge'  
   command: chdir=/root/ {{ item }}
@@ -31,10 +31,10 @@
     - sudo npm install -g homebridge-fritz
 
 - name: 'Configure homebridge'
-  copy: src=./homebridge/config.json dest=/home/pi/.homebridge/config.json mode=0600
+  copy: src=./templates/homebridge/config.json dest=/home/pi/.homebridge/config.json mode=0600
 
 - name: 'Configure homebridge init.d'
-  copy: src=./homebridge/homebridge dest=/etc/init.d/homebridge mode=0755
+  copy: src=./templates/homebridge/homebridge dest=/etc/init.d/homebridge mode=0755
 
 - name: '.homebridge owned by pi'
   file:

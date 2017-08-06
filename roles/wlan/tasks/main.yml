@@ -1,6 +1,6 @@
 ---
 - name: 'Configure WIFI'
-  copy: src=./wlan/wpa_supplicant.conf dest=/etc/wpa_supplicant/wpa_supplicant.conf mode=0600
+  copy: src=./templates/wlan/wpa_supplicant.conf dest=/etc/wpa_supplicant/wpa_supplicant.conf mode=0600
 
 - name: 'Reboot'
   command: sleep 2 && reboot
