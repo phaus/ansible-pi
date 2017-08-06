@@ -20,9 +20,13 @@ Edit `homebridge/config.json` and/or `wlan/wpa_supplicant.conf` and `hosts` file
 
 Deploy using [ansible](http://www.ansible.com) (install instructions for ansible are in [requirements](#requirements) below).
 
-```
-ansible-playbook playbook.yml -i hosts --ask-pass --become
-```
+    ansible-playbook playbook.yml -i hosts --ask-pass --become
+
+or with
+
+    ansible-playbook playbook.yml -i hosts --become
+
+if you have already saved your ssh public key as a authorized key on your PI.
 
 ## Requirements
 
